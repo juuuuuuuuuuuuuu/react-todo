@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import moment from 'moment';
-import { getIndex, sortTodo } from '../util';
+import { getIndex, sortTodo } from 'util/common';
 
 const todoSlice = createSlice({
   name: 'todos',
@@ -10,20 +10,20 @@ const todoSlice = createSlice({
       { id: '2021-01-18 11:30:11', title: 'js', content: '2 공부하기', priority: 'low', isDone: false, dueDate: '2021-01-18' },
       { id: '2021-01-18 11:30:11', title: 'js', content: '3 공부하기', priority: 'low', isDone: true },
     ],
+    filter: 'high',
   },
   reducers: {
     // 할일 항목 추가하기
     addTodo(state, action) {
       action.payload.id = moment(new Date()).format('yyyy-MM-DD hh:mm:ss');
       action.payload.isDone = false;
-      const sortArray = sortTodo(state.todos.concat(action.payload), 'high');
-      state.todos = sortArray;
+      state.todos.push(action.payload)
     },
     // 할일 항목 수정하기
     updateTodo(state, action) {
       const { id, list } = action.payload;
       const index = getIndex(id, state.todos);
-      state.todos[index] = {id, ...list};
+      state.todos[index] = { id, ...list };
     },
      // 할일 항목 삭제하기
     removeTodo(state, action) {
@@ -34,8 +34,9 @@ const todoSlice = createSlice({
       state.todos[action.payload].isDone = true;
     },
     // 할일 항목 필터링 (중요도순으로 정리)
-    filtering(state, action) {
-      sortTodo(state.todos, action.payload)
+    filtering(state, { payload = state.filter}) {
+      state.filter = payload;
+      sortTodo(state.todos, payload);
     },
   }
 });

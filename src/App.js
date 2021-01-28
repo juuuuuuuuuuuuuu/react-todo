@@ -1,12 +1,12 @@
+import { Provider } from 'react-redux';
+import store from 'store';
+import FormGroup from 'containers/FormGroup';
+import TodoList from 'containers/TodoList';
+import Layout from 'components/Layout';
+import ImmutableList from 'containers/ImmutableList';
+
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
-
-import { Provider } from 'react-redux';
-import store from './store';
-import FormGroup from './containers/FormGroup';
-import TodoList from './containers/TodoList';
-import Layout from './components/Layout';
-import ImmutableList from './containers/ImmutableList';
 
 function App() {
   return (

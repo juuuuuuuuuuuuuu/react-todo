@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import List from '../../components/List';
-import { todos } from '../../store/todo';
-import { getFilter } from '../../util';
+import List from 'components/List';
+import { todos } from 'store/todo';
+import { getFilter } from 'util/common';
 
 function ImmutableList({ type }) {
   const data = useSelector(todos);

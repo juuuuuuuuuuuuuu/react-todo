@@ -1,14 +1,14 @@
+/**
+ * 할일 목록 리스트
+ */
 import React, { useState } from 'react';
-import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
-import Layout from '../../components/Layout';
-import List from '../../components/List';
-import SelectBox from '../../components/SelectBox';
-import { completedTodo, filtering, removeTodo, todos } from '../../store/todo';
-import FormGroup from '../FormGroup';
-import { getFilter, getIndex } from '../../util';
+import List from 'components/List';
+import SelectBox from 'components/SelectBox';
+import { completedTodo, filtering, removeTodo, todos } from 'store/todo';
+import FormGroup from 'containers/FormGroup';
+import { getFilter, getIndex } from 'util/common';
 
-console.log(todos);
 const options = [
   { title: '우선순위 높은순', value: 'high' },
   { title: '우선순위 낮은순', value: 'low' },
@@ -23,6 +23,7 @@ function TodoList() {
   const dispatch = useDispatch();
 
   const changeSelect = (type) => {
+
     dispatch(filtering(type));
   };
 
@@ -62,7 +63,6 @@ function TodoList() {
     <>
       {/* 정렬 */}
       <SelectBox options={options} onChange={changeSelect} />
-      {/* <!-- todo list --> */}
       <div
         className="list-group"
         data-element="incompletedList"

@@ -1,9 +1,12 @@
+/**
+ * 할일 목록 입력폼
+ */
 import React, { createRef, useMemo, useState } from 'react';
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
-import SelectBox from '../../components/SelectBox';
-import { addTodo, updateTodo } from '../../store/todo';
-import { isEmpty } from '../../util';
+import SelectBox from 'components/SelectBox';
+import { addTodo, filtering, updateTodo } from 'store/todo';
+import { isEmpty } from 'util/common';
 
 const options = [
   { title: '낮음', value: 'low' },
@@ -11,13 +14,7 @@ const options = [
 ];
 
 function FormGroup({ todo, onClick }) {
-  const inputRefs = useMemo(
-    () =>
-      Array(3)
-        .fill('')
-        .map((i) => createRef()),
-    []
-  );
+  const inputRefs = useMemo(() => Array(3).fill('').map((i) => createRef()), []);
   const [priority, setPriority] = useState(todo?.priority || 'low');
   const dispatch = useDispatch();
 
@@ -35,8 +32,9 @@ function FormGroup({ todo, onClick }) {
 
     const list = { title, content, dueDate, priority };
 
-    (todo && dispatch(updateTodo({ id: todo.id, list }))) ||
-      dispatch(addTodo(list));
+    (todo && dispatch(updateTodo({ id: todo.id, list }))) || dispatch(addTodo(list));
+
+    dispatch(filtering());
 
     // form 초기화
     resetForm();
